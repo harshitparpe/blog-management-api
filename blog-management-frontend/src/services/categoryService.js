@@ -1,0 +1,1 @@
+import api from '../api/axiosConfig'; export const getCategories=()=>api.get('/categories').then(r=>r.data);export const createCategory=d=>api.post('/categories',d).then(r=>r.data);export const updateCategory=(id,d)=>api.put(`/categories/${id}`,d).then(r=>r.data);export const deleteCategory=id=>api.delete(`/categories/${id}`);

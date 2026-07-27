@@ -1,0 +1,21 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: blog_db
+      MYSQL_USER: ${DB_USERNAME:-blog_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-blog_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+    ports: ["3306:3306"]
+    volumes: [mysql_data:/var/lib/mysql]
+    healthcheck: { test: ["CMD","mysqladmin","ping","-h","localhost"], interval: 10s, timeout: 5s, retries: 10 }
+  app:
+    build: .
+    depends_on: { mysql: { condition: service_healthy } }
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/blog_db?useSSL=false&allowPublicKeyRetrieval=true
+      DB_USERNAME: ${DB_USERNAME:-blog_user}
+      DB_PASSWORD: ${DB_PASSWORD:-blog_password}
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+    ports: ["8080:8080"]
+volumes: { mysql_data: {} }

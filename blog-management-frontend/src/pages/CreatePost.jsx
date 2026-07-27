@@ -1,0 +1,1 @@
+import PostForm from './PostForm';export default function CreatePost(){return <div className="container-page max-w-3xl py-10"><h1 className="mb-6 font-[Playfair_Display] text-4xl font-bold">Write a story</h1><PostForm/></div>}

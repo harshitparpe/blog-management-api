@@ -1,0 +1,2 @@
+package com.blog.controller; import com.blog.service.BlogServices.CommentService; import lombok.RequiredArgsConstructor; import org.springframework.http.HttpStatus; import org.springframework.security.core.Authentication; import org.springframework.web.bind.annotation.*;
+@RestController @RequestMapping("/api/comments") @RequiredArgsConstructor public class CommentController {private final CommentService comments;@DeleteMapping("/{id}") @ResponseStatus(HttpStatus.NO_CONTENT) public void delete(@PathVariable Long id,Authentication a){comments.delete(id,a.getName());}}

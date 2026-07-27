@@ -1,0 +1,3 @@
+package com.blog.dto;
+import jakarta.validation.constraints.*; import java.time.Instant;
+public final class AuthDtos { private AuthDtos(){} public record RegisterRequest(@NotBlank @Size(min=3,max=50) String username,@NotBlank @Email String email,@NotBlank @Size(min=8,max=100) String password,@Size(max=60) String firstName,@Size(max=60) String lastName){} public record LoginRequest(@NotBlank String email,@NotBlank String password){} public record UserResponse(Long id,String username,String email,String role,String firstName,String lastName,Instant createdAt){} public record AuthResponse(String token,String tokenType,UserResponse user){} }

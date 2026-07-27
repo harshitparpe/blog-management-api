@@ -1,0 +1,1 @@
+package com.blog.dto; import jakarta.validation.constraints.*; public final class CategoryDtos { private CategoryDtos(){} public record CategoryRequest(@NotBlank @Size(max=80) String name,@Size(max=500) String description){} public record CategoryResponse(Long id,String name,String description){} }

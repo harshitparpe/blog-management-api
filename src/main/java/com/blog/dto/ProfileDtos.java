@@ -1,0 +1,1 @@
+package com.blog.dto; import jakarta.validation.constraints.*; public final class ProfileDtos { private ProfileDtos(){} public record ProfileUpdateRequest(@NotBlank @Size(max=60) String firstName,@NotBlank @Size(max=60) String lastName,@Size(min=8,max=100) String currentPassword,@Size(min=8,max=100) String newPassword){} }

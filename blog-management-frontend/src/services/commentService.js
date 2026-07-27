@@ -1,0 +1,1 @@
+import api from '../api/axiosConfig'; export const getComments=id=>api.get(`/posts/${id}/comments`).then(r=>r.data);export const createComment=(id,d)=>api.post(`/posts/${id}/comments`,d).then(r=>r.data);export const deleteComment=id=>api.delete(`/comments/${id}`);
