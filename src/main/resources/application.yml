@@ -1,4 +1,5 @@
-server: { port: ${SERVER_PORT:8080} }
+server:
+  port: ${PORT:8080}
 spring:
   application: { name: blog-management-api }
   datasource: { url: ${DB_URL:jdbc:mysql://localhost:3306/blog_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true}, username: ${DB_USERNAME:blog_user}, password: ${DB_PASSWORD:blog_password} }
