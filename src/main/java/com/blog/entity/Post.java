@@ -1,2 +1,67 @@
-package com.blog.entity; import jakarta.persistence.*; import lombok.*; import java.time.Instant; import java.util.*;
-@Entity @Table(name="posts",indexes=@Index(name="idx_posts_slug",columnList="slug")) @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder public class Post { @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id; @Column(nullable=false,length=180) private String title; @Column(nullable=false,unique=true,length=220) private String slug; @Lob @Column(nullable=false) private String content; private String imageUrl; @Column(nullable=false) private boolean published; @Column(nullable=false,updatable=false) private Instant createdAt; @Column(nullable=false) private Instant updatedAt; @ManyToOne(fetch=FetchType.LAZY,optional=false) @JoinColumn(name="author_id") private User author; @ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="category_id") private Category category; @OneToMany(mappedBy="post",cascade=CascadeType.REMOVE) private List<Comment> comments=new ArrayList<>(); @PrePersist void created(){createdAt=updatedAt=Instant.now();} @PreUpdate void updated(){updatedAt=Instant.now();} }
+package com.blog.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.Instant;
+import java.util.*;
+
+@Entity
+@Table(
+    name = "posts",
+    indexes = @Index(name = "idx_posts_slug", columnList = "slug")
+)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 180)
+    private String title;
+
+    @Column(nullable = false, unique = true, length = 220)
+    private String slug;
+
+    @Lob
+    @Column(nullable = false)
+    private String content;
+
+    @Lob
+    private String imageUrl;
+
+    @Column(nullable = false)
+    private boolean published;
+
+    @Column(nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @Column(nullable = false)
+    private Instant updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<Comment> comments = new ArrayList<>();
+
+    @PrePersist
+    void created() {
+        createdAt = updatedAt = Instant.now();
+    }
+
+    @PreUpdate
+    void updated() {
+        updatedAt = Instant.now();
+    }
+}
