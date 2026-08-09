@@ -48,7 +48,6 @@ public class SecurityConfig {
         return c.getAuthenticationManager();
     }
 
-    // CORS configuration for the Vercel frontend
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
 
@@ -87,7 +86,6 @@ public class SecurityConfig {
         return http
                 .csrf(c -> c.disable())
 
-                // Enable CORS
                 .cors(Customizer.withDefaults())
 
                 .sessionManagement(s ->
@@ -95,18 +93,22 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(a -> a
+
+                        // Authentication endpoints must be public
                         .requestMatchers(
-                                "/api/auth/**",
+                                "/auth/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
 
+                        // Public GET endpoints
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/posts/**",
                                 "/api/categories/**"
                         ).permitAll()
 
+                        // Everything else requires JWT
                         .anyRequest().authenticated()
                 )
 
